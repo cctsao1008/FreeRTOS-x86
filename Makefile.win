@@ -1,0 +1,55 @@
+# Project: Z61-FreeRTOS-x86
+# Makefile created by Dev-C++ 5.11
+
+CPP      = g++.exe -D__DEBUG__
+CC       = gcc.exe -D__DEBUG__
+WINDRES  = windres.exe
+OBJ      = main.o FreeRTOS/FreeRTOS-Kernel/croutine.o FreeRTOS/FreeRTOS-Kernel/event_groups.o FreeRTOS/FreeRTOS-Kernel/list.o FreeRTOS/FreeRTOS-Kernel/queue.o FreeRTOS/FreeRTOS-Kernel/stream_buffer.o FreeRTOS/FreeRTOS-Kernel/tasks.o FreeRTOS/FreeRTOS-Kernel/timers.o FreeRTOS/FreeRTOS-Kernel/portable/MSVC-MingW/port.o FreeRTOS/FreeRTOS-Kernel/portable/MemMang/heap_4.o
+LINKOBJ  = main.o FreeRTOS/FreeRTOS-Kernel/croutine.o FreeRTOS/FreeRTOS-Kernel/event_groups.o FreeRTOS/FreeRTOS-Kernel/list.o FreeRTOS/FreeRTOS-Kernel/queue.o FreeRTOS/FreeRTOS-Kernel/stream_buffer.o FreeRTOS/FreeRTOS-Kernel/tasks.o FreeRTOS/FreeRTOS-Kernel/timers.o FreeRTOS/FreeRTOS-Kernel/portable/MSVC-MingW/port.o FreeRTOS/FreeRTOS-Kernel/portable/MemMang/heap_4.o
+LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -lwinmm -g3
+INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"./FreeRTOS/FreeRTOS-Kernel/include" -I"./FreeRTOS/FreeRTOS-Kernel/portable/MSVC-MingW" -I"./FreeRTOS"
+CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++" -I"./FreeRTOS/FreeRTOS-Kernel/include" -I"./FreeRTOS/FreeRTOS-Kernel/portable/MSVC-MingW" -I"./FreeRTOS"
+BIN      = Z61-FreeRTOS-x86.exe
+CXXFLAGS = $(CXXINCS) -g3
+CFLAGS   = $(INCS) -g3
+RM       = rm.exe -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CC) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+main.o: main.cpp
+	$(CC) -c main.cpp -o main.o $(CFLAGS)
+
+FreeRTOS/FreeRTOS-Kernel/croutine.o: FreeRTOS/FreeRTOS-Kernel/croutine.c
+	$(CC) -c FreeRTOS/FreeRTOS-Kernel/croutine.c -o FreeRTOS/FreeRTOS-Kernel/croutine.o $(CFLAGS)
+
+FreeRTOS/FreeRTOS-Kernel/event_groups.o: FreeRTOS/FreeRTOS-Kernel/event_groups.c
+	$(CC) -c FreeRTOS/FreeRTOS-Kernel/event_groups.c -o FreeRTOS/FreeRTOS-Kernel/event_groups.o $(CFLAGS)
+
+FreeRTOS/FreeRTOS-Kernel/list.o: FreeRTOS/FreeRTOS-Kernel/list.c
+	$(CC) -c FreeRTOS/FreeRTOS-Kernel/list.c -o FreeRTOS/FreeRTOS-Kernel/list.o $(CFLAGS)
+
+FreeRTOS/FreeRTOS-Kernel/queue.o: FreeRTOS/FreeRTOS-Kernel/queue.c
+	$(CC) -c FreeRTOS/FreeRTOS-Kernel/queue.c -o FreeRTOS/FreeRTOS-Kernel/queue.o $(CFLAGS)
+
+FreeRTOS/FreeRTOS-Kernel/stream_buffer.o: FreeRTOS/FreeRTOS-Kernel/stream_buffer.c
+	$(CC) -c FreeRTOS/FreeRTOS-Kernel/stream_buffer.c -o FreeRTOS/FreeRTOS-Kernel/stream_buffer.o $(CFLAGS)
+
+FreeRTOS/FreeRTOS-Kernel/tasks.o: FreeRTOS/FreeRTOS-Kernel/tasks.c
+	$(CC) -c FreeRTOS/FreeRTOS-Kernel/tasks.c -o FreeRTOS/FreeRTOS-Kernel/tasks.o $(CFLAGS)
+
+FreeRTOS/FreeRTOS-Kernel/timers.o: FreeRTOS/FreeRTOS-Kernel/timers.c
+	$(CC) -c FreeRTOS/FreeRTOS-Kernel/timers.c -o FreeRTOS/FreeRTOS-Kernel/timers.o $(CFLAGS)
+
+FreeRTOS/FreeRTOS-Kernel/portable/MSVC-MingW/port.o: FreeRTOS/FreeRTOS-Kernel/portable/MSVC-MingW/port.c
+	$(CC) -c FreeRTOS/FreeRTOS-Kernel/portable/MSVC-MingW/port.c -o FreeRTOS/FreeRTOS-Kernel/portable/MSVC-MingW/port.o $(CFLAGS)
+
+FreeRTOS/FreeRTOS-Kernel/portable/MemMang/heap_4.o: FreeRTOS/FreeRTOS-Kernel/portable/MemMang/heap_4.c
+	$(CC) -c FreeRTOS/FreeRTOS-Kernel/portable/MemMang/heap_4.c -o FreeRTOS/FreeRTOS-Kernel/portable/MemMang/heap_4.o $(CFLAGS)
