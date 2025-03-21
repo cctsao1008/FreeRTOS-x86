@@ -4,14 +4,14 @@ Name=Z61-FreeRTOS-x86
 Type=1
 Ver=2
 ObjFiles=
-Includes=.\FreeRTOS-LTS\FreeRTOS-Kernel\include;.\FreeRTOS-LTS
+Includes=.\FreeRTOS\FreeRTOS-Kernel\include;.\FreeRTOS\FreeRTOS-Kernel\portable\MSVC-MingW;.\FreeRTOS
 Libs=
 PrivateResource=
 ResourceIncludes=
 MakeIncludes=
 Compiler=
 CppCompiler=
-Linker=
+Linker=-lwinmm_@@_
 IsCpp=0
 Icon=
 ExeOutput=
@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0000000000000000001000000
-UnitCount=1
+UnitCount=10
 
 [VersionInfo]
 Major=1
@@ -61,7 +61,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit9]
-FileName=FreeRTOS-LTS\FreeRTOS-Kernel\portable\MemMang\heap_4.c
+FileName=FreeRTOS\FreeRTOS-Kernel\portable\MSVC-MingW\port.c
 CompileCpp=0
 Folder=FreeRTOS Kernel V11.1.0
 Compile=1
@@ -71,7 +71,77 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit10]
-FileName=FreeRTOS-LTS\FreeRTOS-Kernel\portable\MSVC-MingW\port.c
+FileName=FreeRTOS\FreeRTOS-Kernel\portable\MemMang\heap_4.c
+CompileCpp=0
+Folder=FreeRTOS Kernel V11.1.0
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit2]
+FileName=FreeRTOS\FreeRTOS-Kernel\croutine.c
+CompileCpp=0
+Folder=FreeRTOS Kernel V11.1.0
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit3]
+FileName=FreeRTOS\FreeRTOS-Kernel\event_groups.c
+CompileCpp=0
+Folder=FreeRTOS Kernel V11.1.0
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit4]
+FileName=FreeRTOS\FreeRTOS-Kernel\list.c
+CompileCpp=0
+Folder=FreeRTOS Kernel V11.1.0
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit5]
+FileName=FreeRTOS\FreeRTOS-Kernel\queue.c
+CompileCpp=0
+Folder=FreeRTOS Kernel V11.1.0
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit6]
+FileName=FreeRTOS\FreeRTOS-Kernel\stream_buffer.c
+CompileCpp=0
+Folder=FreeRTOS Kernel V11.1.0
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit7]
+FileName=FreeRTOS\FreeRTOS-Kernel\tasks.c
+CompileCpp=0
+Folder=FreeRTOS Kernel V11.1.0
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit8]
+FileName=FreeRTOS\FreeRTOS-Kernel\timers.c
 CompileCpp=0
 Folder=FreeRTOS Kernel V11.1.0
 Compile=1
