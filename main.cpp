@@ -96,13 +96,66 @@ void TaskFunction(void *pvParameters) {
     }
 }
 
+// examples for using event group
+// Define event bits
+#define EVENT_BIT_0  (1 << 0)  // 0x01
+#define EVENT_BIT_1  (1 << 1)  // 0x02
+
+EventGroupHandle_t xEventGroup; // Handle for the event group
+
+void vTask6(void *pvParameters) {
+    while (1) {
+        printf("Task 6 setting EVENT_BIT_0\n");
+        xEventGroupSetBits(xEventGroup, EVENT_BIT_0); // Set bit 0
+        vTaskDelay(pdMS_TO_TICKS(1000)); // Simulate work
+    }
+}
+
+void vTask7(void *pvParameters) {
+    while (1) {
+        printf("Task 7 setting EVENT_BIT_1\n");
+        xEventGroupSetBits(xEventGroup, EVENT_BIT_1); // Set bit 1
+        vTaskDelay(pdMS_TO_TICKS(1500)); // Simulate work
+    }
+}
+
+void vTaskWait(void *pvParameters) {
+    while (1) {
+        // Wait until both EVENT_BIT_0 and EVENT_BIT_1 are set
+        EventBits_t uxBits = xEventGroupWaitBits(
+            xEventGroup,      // Event group handle
+            EVENT_BIT_0 | EVENT_BIT_1, // Bits to wait for
+            pdTRUE,           // Clear bits on exit
+            pdTRUE,           // Wait for all bits
+            portMAX_DELAY     // Wait forever
+        );
+
+        if ((uxBits & (EVENT_BIT_0 | EVENT_BIT_1)) == (EVENT_BIT_0 | EVENT_BIT_1)) {
+            printf("TaskWait: Both events received!\n");
+            printf("TaskWait clear EVENT_BIT_0 and EVENT_BIT_1\n");
+            xEventGroupClearBits(xEventGroup, EVENT_BIT_0 | EVENT_BIT_1); // Clear bit 0 and bit 1
+        }
+        
+        vTaskDelay(pdMS_TO_TICKS(1500)); // Simulate work
+    }
+}
+
 int main() {
+    // Create the event group
     queue = xQueueCreate(1000, sizeof(float));
     
     if( queue == NULL )
     {
         /* Queue was not created and must not be used. */
         printf("queue was not created.");
+        return (EXIT_FAILURE);
+    }
+    
+    // Create the event group
+    xEventGroup = xEventGroupCreate();
+
+    if (xEventGroup == NULL) {
+        printf("Failed to create event group\n");
         return (EXIT_FAILURE);
     }
 
@@ -127,6 +180,11 @@ int main() {
 
     // Create a FreeRTOS task for processing UART data
     xTaskCreate(vUARTReceiveTask, "Task5", 256, NULL, 2, NULL);
+
+    // Create tasks
+    xTaskCreate(vTask6, "Task6", 256, NULL, 2, NULL);
+    xTaskCreate(vTask7, "Task7", 256, NULL, 2, NULL);
+    xTaskCreate(vTaskWait, "TaskWait", 1024, NULL, 1, NULL);
 
     // Simulate an ISR using a separate Windows thread(Windows-only)
     HANDLE hThread = CreateThread(NULL, 0, vUARTISR, NULL, 0, NULL);
