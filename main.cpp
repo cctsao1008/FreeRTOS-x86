@@ -140,6 +140,20 @@ void vTaskWait(void *pvParameters) {
     }
 }
 
+// example: Creating a Software Timer
+// Timer handles
+TimerHandle_t xOneShotTimer;
+TimerHandle_t xPeriodicTimer;
+
+// Timer callback functions
+void vOneShotTimerCallback(TimerHandle_t xTimer) {
+    printf("One-shot timer expired!\n");
+}
+
+void vPeriodicTimerCallback(TimerHandle_t xTimer) {
+    printf("Periodic timer expired!\n");
+}
+
 int main() {
     // Create the event group
     queue = xQueueCreate(1000, sizeof(float));
@@ -159,6 +173,7 @@ int main() {
         return (EXIT_FAILURE);
     }
 
+#if 0
     xTaskCreate(RxTask, "RxTask", 256, NULL, 1, NULL);
     xTaskCreate(TxTask, "TxTask", 256, NULL, 1, NULL);
     
@@ -175,7 +190,7 @@ int main() {
     xStreamBuffer = xStreamBufferCreate(BUFFER_SIZE, TRIGGER_LEVEL);
     if (xStreamBuffer == NULL) {
         printf("Failed to create stream buffer!\n");
-        return 1;
+        return (EXIT_FAILURE);
     }
 
     // Create a FreeRTOS task for processing UART data
@@ -184,14 +199,33 @@ int main() {
     // Create tasks
     xTaskCreate(vTask6, "Task6", 256, NULL, 2, NULL);
     xTaskCreate(vTask7, "Task7", 256, NULL, 2, NULL);
-    xTaskCreate(vTaskWait, "TaskWait", 1024, NULL, 1, NULL);
+    xTaskCreate(vTaskWait, "TaskWait", 256, NULL, 1, NULL);
+#endif
+    
+    // Create a one-shot timer (fires once after 5 seconds)
+    xOneShotTimer = xTimerCreate("OneShot", pdMS_TO_TICKS(5000), pdFALSE, 0, vOneShotTimerCallback);
 
+    // Create a periodic timer (fires every 1 second)
+    xPeriodicTimer = xTimerCreate("Periodic", pdMS_TO_TICKS(1000), pdTRUE, 0, vPeriodicTimerCallback);
+
+    if (xOneShotTimer == NULL || xPeriodicTimer == NULL) {
+        printf("Failed to create timers\n");
+        return (EXIT_FAILURE);
+    }
+
+    // Start the timers
+    xTimerStart(xOneShotTimer, 0);
+    xTimerStart(xPeriodicTimer, 0);
+
+#if 0
     // Simulate an ISR using a separate Windows thread(Windows-only)
     HANDLE hThread = CreateThread(NULL, 0, vUARTISR, NULL, 0, NULL);
+
     if (hThread == NULL) {
         printf("Failed to create ISR thread!\n");
-        return 1;
+        return (EXIT_FAILURE);
     }
+#endif
 
     vTaskStartScheduler();
     return 0;
